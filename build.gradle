@@ -1,0 +1,43 @@
+buildscript {
+    apply from: "$rootDir/dependencies.gradle"
+
+    repositories {
+        google()
+        jcenter()
+
+    }
+
+    dependencies {
+        //noinspection GradleDependency
+        classpath gradlePlugins.androidGradlePlugin
+        classpath gradlePlugins.kotlin
+    }
+}
+
+allprojects {
+    apply from: "$rootDir/dependencies.gradle"
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        // treat all warnings as errors
+        options.compilerArgs += '-Werror'
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = '1.8'
+            // treat all warnings as errors
+            kotlinOptions.allWarningsAsErrors = true
+            // Inline classes
+            freeCompilerArgs = ['-XXLanguage:+InlineClasses']
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

@@ -1,5 +1,7 @@
 # Gradle
 **/build
+local.properties
+.gradle
 
 # JetBrians
 **/*.iml
